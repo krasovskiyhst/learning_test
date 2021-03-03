@@ -20,7 +20,7 @@ class NewVisitorTest(unittest.TestCase):
 		self.browser.get('http://localhost:8000')
 
 		# Клиент видит, что заголовок и шапка стр говорят о списках дел
-		self.assertIn('To-Do' in browser.title)
+		self.assertIn('To-Do', self.browser.title)
 		self.fail('Закончить тест')
 
 		# Клиенту предлагается ввести элемент списка
