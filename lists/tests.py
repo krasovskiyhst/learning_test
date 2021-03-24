@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import resolve
 from lists.views import home_page
 from django.http import HttpRequest
-from lists.models import Item
+from lists.models import Item, List
 
 # Create your tests here.
 
@@ -16,19 +16,26 @@ class HomePageTest(TestCase):
 		self.assertTemplateUsed(response, 'home.html')
 
 
-class ItemModelTest(TestCase):
+class ListAndItemModelTest(TestCase):
 	'''тест модели жлемента списка'''
 
 	def test_saving_and_retrieving_items(self):
 		'''тест сохранения и получения элементов списка'''
+		list1 = List()
+		list1.save()
+
 		first_item = Item()
 		first_item.text = 'The first (ever) list item'
+		first_item.list = list1
 		first_item.save()
 
 		second_item = Item()
 		second_item.text = 'Item the second'
-
+		second_item.list = list1
 		second_item.save()
+
+		saved_list = List.objects.first()
+		self.assertEqual(saved_list, list1)
 
 		saved_items = Item.objects.all()
 		self.assertEqual(saved_items.count(), 2)
@@ -36,7 +43,9 @@ class ItemModelTest(TestCase):
 		first_saved_item = saved_items[0]
 		second_saved_item = saved_items[1]
 		self.assertEqual(first_saved_item.text, 'The first (ever) list item')
+		self.assertEqual(first_saved_item.list, list1)
 		self.assertEqual(second_saved_item.text, 'Item the second')
+		self.assertEqual(second_saved_item.list, list1)
 
 class ListViewTest(TestCase):
 	'''тест представления списка'''
@@ -48,8 +57,9 @@ class ListViewTest(TestCase):
 
 	def test_displays_all_items(self):
 		'''тест: отображаются все элементы списка'''
-		Item.objects.create(text='itemey 1')
-		Item.objects.create(text='itemey 2')
+		list1 = List.objects.create()
+		Item.objects.create(text='itemey 1', list=list1)
+		Item.objects.create(text='itemey 2', list=list1)
 
 		response = self.client.get('/lists/one-of-a-kind-list-in-the-world/')
 
