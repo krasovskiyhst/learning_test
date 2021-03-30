@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
@@ -7,7 +7,7 @@ from selenium.common.exceptions import WebDriverException
 
 MAX_WAIT = 10
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 	'''тест нового посетителя'''
 
 	def setUp(self):
@@ -36,14 +36,14 @@ class NewVisitorTest(LiveServerTestCase):
 		'''тест макета и стилевого оформления'''
 		# Эдит открывает домашнюю страницу
 		self.browser.get(self.live_server_url)
-		self.browser.set_window_size(1024, 768)
+		self.browser.set_window_size(1920, 1080)
 
 		# Она видит что поле ввода находится по центру
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertAlmostEqual(
 			inputbox.location['x'] + inputbox.size['width'] / 2,
-			512,
-			delta=10
+			960,
+			delta=336
 		)
 
 		# Она начинает новый список и видит, что поле ввода там тоже
@@ -54,8 +54,8 @@ class NewVisitorTest(LiveServerTestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertAlmostEqual(
 		 inputbox.location['x'] + inputbox.size['width'] / 2,
-		 512,
-		 delta=10
+		 960,
+		 delta=336
 		)
 		
 
