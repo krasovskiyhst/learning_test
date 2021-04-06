@@ -3,9 +3,9 @@ Discription=Gunicorn server fot DOMEN
 
 [Service]
 Restart=on-failure
-User=NAME
-WorkingDirectory=/home/NAME/sites/DOMEN/source
-ExicStart=/home/NAME/sites/DOMEN/virtualenv/bin/gunicorn --bind unix:/tmp/DOMEN.socket superlists.wsgi:application
+User=kotik
+WorkingDirectory=/home/kotik/sites/DOMEN/source
+ExicStart=/home/kotik/sites/DOMEN/virtualenv/bin/gunicorn --bind unix:/tmp/DOMEN.socket superlists.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
