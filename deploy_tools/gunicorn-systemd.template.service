@@ -5,7 +5,7 @@ Discription=Gunicorn server fot DOMEN
 Restart=on-failure
 User=kotik
 WorkingDirectory=/home/kotik/sites/DOMEN/source
-ExicStart=/home/kotik/sites/DOMEN/virtualenv/bin/gunicorn --bind unix:/tmp/DOMEN.socket superlists.wsgi:application
+ExecStart=/home/kotik/sites/DOMEN/virtualenv/bin/gunicorn --bind unix:/tmp/DOMEN.socket superlists.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
